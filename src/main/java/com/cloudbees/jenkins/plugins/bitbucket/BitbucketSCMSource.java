@@ -424,7 +424,7 @@ public class BitbucketSCMSource extends SCMSource {
                         (AbstractGitSCMSource.SCMRevisionImpl) revision) : new DefaultBuildChooser();
 
                 extensions.add(new BuildChooserSetting(buildChooser));
-                extensions.add(new SubmoduleOption(false, false, false, "HEAD", 10000));
+                extensions.add(new SubmoduleOption(false, false, false, "", 10000, true));
 
                 return new GitSCM(
                         getGitRemoteConfigs(h),
