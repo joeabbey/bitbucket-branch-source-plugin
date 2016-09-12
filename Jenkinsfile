@@ -4,7 +4,7 @@
 properties([[$class: 'BuildDiscarderProperty',
                 strategy: [$class: 'LogRotator', numToKeepStr: '10']]])
 
-node ("maven") {
+node ("master") {
   stage 'Checkout'
   checkout scm
 
