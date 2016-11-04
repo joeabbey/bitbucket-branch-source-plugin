@@ -21,61 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.cloudbees.jenkins.plugins.bitbucket.server.client.pullrequest;
+package com.cloudbees.jenkins.plugins.bitbucket.server.events;
 
+import com.cloudbees.jenkins.plugins.bitbucket.api.BitbucketPushEvent;
+import com.cloudbees.jenkins.plugins.bitbucket.api.BitbucketRepository;
+import com.cloudbees.jenkins.plugins.bitbucket.server.client.repository.BitbucketServerRepository;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.annotate.JsonProperty;
-
-import com.cloudbees.jenkins.plugins.bitbucket.api.BitbucketPullRequest;
-import com.cloudbees.jenkins.plugins.bitbucket.api.BitbucketPullRequestSource;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BitbucketServerPullRequest implements BitbucketPullRequest {
+public class BitbucketServerPushEvent implements BitbucketPushEvent{
 
-    private String id;
+    private BitbucketServerRepository repository;
 
-    @JsonProperty("fromRef")
-    private BitbucketServerPullRequestSource source;
-
-    private String title;
-
-    private String link;
-
-    private String authorLogin;
-
-    @Override
-    public BitbucketPullRequestSource getSource() {
-        return source;
+    public BitbucketRepository getRepository() {
+        return repository;
     }
 
-    public void setSource(BitbucketServerPullRequestSource source) {
-        this.source = source;
-    }
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Override
-    public String getTitle() {
-        return this.title;
-    }
-
-    // TODO: unmapped, need proper JsonProperty in the field
-    @Override
-    public String getLink() {
-        return link;
-    }
-
-    // TODO: unmapped, need proper JsonProperty in the field
-    @Override
-    public String getAuthorLogin() {
-        return authorLogin;
+    public void setRepository(BitbucketServerRepository repository) {
+        this.repository = repository;
     }
 
 }

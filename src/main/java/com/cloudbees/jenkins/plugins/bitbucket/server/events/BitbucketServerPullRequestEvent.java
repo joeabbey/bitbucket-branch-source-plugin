@@ -21,61 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.cloudbees.jenkins.plugins.bitbucket.server.client.pullrequest;
+package com.cloudbees.jenkins.plugins.bitbucket.server.events;
 
+import com.cloudbees.jenkins.plugins.bitbucket.api.BitbucketPullRequestEvent;
+import com.cloudbees.jenkins.plugins.bitbucket.server.client.pullrequest.BitbucketServerPullRequest;
+import com.cloudbees.jenkins.plugins.bitbucket.server.client.repository.BitbucketServerRepository;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import com.cloudbees.jenkins.plugins.bitbucket.api.BitbucketPullRequest;
-import com.cloudbees.jenkins.plugins.bitbucket.api.BitbucketPullRequestSource;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BitbucketServerPullRequest implements BitbucketPullRequest {
+public class BitbucketServerPullRequestEvent implements BitbucketPullRequestEvent {
 
-    private String id;
+    @JsonProperty("pullrequest")
+    private BitbucketServerPullRequest pullRequest;
 
-    @JsonProperty("fromRef")
-    private BitbucketServerPullRequestSource source;
-
-    private String title;
-
-    private String link;
-
-    private String authorLogin;
+    private BitbucketServerRepository repository;
 
     @Override
-    public BitbucketPullRequestSource getSource() {
-        return source;
+    public BitbucketServerPullRequest getPullRequest() {
+        return pullRequest;
     }
 
-    public void setSource(BitbucketServerPullRequestSource source) {
-        this.source = source;
+    public void setPullRequest(BitbucketServerPullRequest pullRequest) {
+        this.pullRequest = pullRequest;
     }
 
     @Override
-    public String getId() {
-        return id;
+    public BitbucketServerRepository getRepository() {
+        return repository;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Override
-    public String getTitle() {
-        return this.title;
-    }
-
-    // TODO: unmapped, need proper JsonProperty in the field
-    @Override
-    public String getLink() {
-        return link;
-    }
-
-    // TODO: unmapped, need proper JsonProperty in the field
-    @Override
-    public String getAuthorLogin() {
-        return authorLogin;
+    public void setRepository(BitbucketServerRepository repository) {
+        this.repository = repository;
     }
 
 }

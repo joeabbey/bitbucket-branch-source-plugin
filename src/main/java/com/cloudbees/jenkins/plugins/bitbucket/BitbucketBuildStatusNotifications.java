@@ -48,6 +48,7 @@ import java.io.File;
 import jenkins.scm.api.SCMHead;
 import jenkins.scm.api.SCMSource;
 import jenkins.scm.api.SCMSourceOwner;
+import org.jenkinsci.plugins.displayurlapi.DisplayURLProvider;
 
 /**
  * This class encapsulates all Bitbucket notifications logic.
@@ -65,9 +66,10 @@ public class BitbucketBuildStatusNotifications {
             Result result = build.getResult();
             String url;
             try {
-                url = build.getAbsoluteUrl();
-            } catch (IllegalStateException ise) {
-                url = "http://unconfigured-jenkins-location/" + build.getUrl();
+                url = DisplayURLProvider.get().getRunURL(build);
+            } catch (IllegalStateException e) {
+                listener.getLogger().println("Can not determine Jenkins root URL. Commit status notifications are disabled until a root URL is configured in Jenkins global configuration.");
+                return;
             }
             BitbucketBuildStatus status = null;
             if (Result.SUCCESS.equals(result)) {
