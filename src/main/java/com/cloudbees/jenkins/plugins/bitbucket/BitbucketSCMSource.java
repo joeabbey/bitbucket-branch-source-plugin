@@ -546,7 +546,7 @@ public class BitbucketSCMSource extends SCMSource {
                         : new DefaultBuildChooser();
 
                 extensions.add(new BuildChooserSetting(buildChooser));
-                extensions.add(new SubmoduleOption(false, true, false, "", 10000));
+                extensions.add(new SubmoduleOption(false, true, false, "", 10000, true));
 
                 return new GitSCM(getGitRemoteConfigs(h),
                         Collections.singletonList(new BranchSpec(h.getBranchName())),
