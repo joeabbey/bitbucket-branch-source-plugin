@@ -567,13 +567,19 @@ public class BitbucketSCMSource extends SCMSource {
             return scm;
         } else {
             // Defaults to Git
+            List<GitSCMExtension> extensions = new LinkedList<GitSCMExtension>();
+
             BuildChooser buildChooser = revision instanceof AbstractGitSCMSource.SCMRevisionImpl
-                    ? new SpecificRevisionBuildChooser((AbstractGitSCMSource.SCMRevisionImpl) revision)
+                    ? new SpecificRevisionBuildChooser( (AbstractGitSCMSource.SCMRevisionImpl) revision)
                     : new DefaultBuildChooser();
+
+            extensions.add(new BuildChooserSetting(buildChooser));
+            extensions.add(new SubmoduleOption(false, true, false, "", 10000, true));
+
             return new GitSCM(getGitRemoteConfigs((BranchSCMHead)head),
                     Collections.singletonList(new BranchSpec(head.getName())),
                     false, Collections.<SubmoduleConfig>emptyList(),
-                    null, null, Collections.<GitSCMExtension>singletonList(new BuildChooserSetting(buildChooser)));
+                    null, null, extensions);
         }
     }
 
